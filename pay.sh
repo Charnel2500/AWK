@@ -77,6 +77,54 @@ printf "\n\nLet's check who get the most money:\n"
 awk '$2 > max_pay {max_pay = $2; name_max = $1}
 END { printf("%s earns the most money and it is %s. \n", name_max, max_pay) }' emp.data
 
+printf "\n\nPrint all names:\n"
+#dodane jest names po lewej, bo dzięki temu przy każdej linii dodaje z poprzednich
+awk '{ names = names $1 " " } 
+END { print names }' emp.data
 
 
+printf "\n\nPrint last line:\n"
+awk '{ last = $0 } 
+END { print last }' emp.data
 
+printf "\n\nBuild-in length function:\n"
+awk '{ print $1, length($1) }' emp.data
+
+printf "\n\nBuild-in length function:\n"
+awk '{ nc = nc + length($0) +1 
+	nw = nw + NF }
+END {print NR, "lines", nw, "words", nc, "characters"}' emp.data
+
+printf "\n\nCompute all money that people earn, who earn more than 6 euro per hour:\n"
+awk '$2 > 6 { n = n + 1; pay = pay + $2 * $3 }
+END { if  (n > 0) { print "There are" n  "People who earn more than 6 euros per hour earn" pay}
+	else { print "There is no people who earn more than 6 euros per hour"}}' emp.data
+
+# interest1 - compute compound interest
+#input: amount rate years
+#output: compounded value at the end of each year
+awk '{ i = 1
+  while (i <= $3) {
+	printf("\t%.2f\n", $1 * (1 + $2) ^ i )
+	i = i + 1
+	}
+}' value.txt
+
+# interest1 - compute compound interest
+#input: amount rate years
+#output: compounded value at the end of each year
+awk '{for (i = 1; i <= $3; i += 1) {
+	printf("\t%.2f\n", $1 * (1 + $2) ^ i )}}' value.txt
+
+printf "\n\nPrint in reverse order:\n"
+awk '{ line[NR] = $0}
+END { i = NR
+   while (i > 0) {
+	print line[i]
+	i = i - 1
+}}' emp.data
+
+printf "\n\nPrint in reverse order (for loop version):\n"
+awk '{ line[NR] = $0 }
+END { for (i = NR; i > 0; i -= 1) {
+	print line[i]}}' emp.data
