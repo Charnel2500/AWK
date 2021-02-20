@@ -128,3 +128,77 @@ printf "\n\nPrint in reverse order (for loop version):\n"
 awk '{ line[NR] = $0 }
 END { for (i = NR; i > 0; i -= 1) {
 	print line[i]}}' emp.data
+
+printf "\n\nPrint the total number of input lines:\n"
+awk 'END {print NR}' emp.data
+
+printf "\n\nPrint the tenth input line:\n"
+awk 'NR == 10' emp.data
+
+printf "\n\nPrint the last field of every input line:\n"
+awk '{print $NF}' emp.data
+
+printf "\n\nPrint the last field of the last input line:\n"
+awk '{field = $NF}
+END  {print field}' emp.data
+
+printf "\n\nPrint every input line with more than four fields:\n"
+awk 'NF > 4' emp.data
+
+printf "\n\nPrint every input line in which the last field is more than 4:\n"
+awk '$NF > 4' emp.data
+
+printf "\n\nPrint the total number of fields in all input lines:\n"
+awk 'nf = nf + $NF
+END {print $NF}' emp.data
+
+printf "\n\nPrint the total number of lines that contain Beth:\n"
+awk '/Beth/ { nlines = nlines + 1 }
+END {nlines}'  emp.data
+
+printf "\n\nPrint the largest first field and the line that contains it (assumes some
+1 is positive):\n"
+awk '$1 > max {max=$1 max_line = $0}
+END {print max, max_line}' emp.data
+
+printf "\n\nPrint every line that has at least one field:\n"
+awk 'NF > 0' emp.data
+
+printf "\n\nPrint every line longer than 80 characters:\n"
+awk 'length($0) > 80' emp.data
+
+printf "\n\nPrint the number of fields in every line followed by the line itself:\n"
+awk '{print $NF, $0}' emp.data
+
+printf "\n\nPrint the first two fields, in opposite order, of every line:\n"
+awk '{print $2, $1}' emp.data
+
+printf "\n\nExchange the first two fields of every line and then print the line:\n"
+awk '{temp = $1, $1 = $2, $2 = temp, print}' emp.data
+
+printf "\n\nPrint every line with the first field replaced by the line number:\n"
+awk '{$1 = NR, print}' emp.data
+
+printf "\n\nPrint every line after erasing the second field:\n"
+awk '{$2 = "", print}' emp.data
+
+printf "\n\nPrint in reverse order the fields of every line:\n"
+awk '{for (i = NR; i > 0; i -= 1) {printf("%s" $i)}; printf{"\n"}' emp.data
+
+printf "\n\nPrint the sums of the fields of every line:\n"
+awk '{ sum = 0
+	for (i = 1; i <= NF; i = i + 1) sum = sum + $i
+	print sum
+}' emp.data
+
+printf "\n\nAdd up all fields in all lines and print the sum:\n"
+awk '{ sum = 0
+	for (i = 1; i <= NF; i = i + 1) sum = sum + $i
+END {print sum}' emp.data
+
+printf "\n\nPrint every line after replacing each field by its absolute value:\n"
+awk '{for (i = 1; i <= NF; i = i + 1) if (i < 0) $i = -$i
+	print
+}' emp.data
+
+
